@@ -1,0 +1,22 @@
+#ifndef  __KEY_H__
+#define  __KEY_H__ 
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif  
+#include "drv_gpio.h"
+
+
+/*  key函数映射 */
+#define  drv_key_init               drv_gpio_init          
+#define  drv_key_get_level          drv_gpio_get_level      
+
+
+
+// extern drv_gpio_type_t key_sw;
+
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* __KEY_H__ */
