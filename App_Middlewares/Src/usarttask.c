@@ -8,14 +8,16 @@ extern osMessageQueueId_t uartQueue01Handle;
 void uart_Rx_Task(void *argument){
     /* USER CODE BEGIN uart_Rx_Task */
     msg_type recv_msg;
+#ifdef  DEBUG_PRINTF
     SEGGER_RTT_printf(0, "UART RX Task started\r\n");
+#endif
     /* Infinite loop */
     while(1)
     {
        osStatus_t status = osMessageQueueGet(uartQueue01Handle, &recv_msg, NULL, pdMS_TO_TICKS(1000)); // 1秒超时
        if(status == osOK){
            if(recv_msg.length > 0){
-           
+#ifdef  DEBUG_PRINTF         
             SEGGER_RTT_printf(0, "Received %d bytes: ", recv_msg.length);
             for(int i = 0; i < recv_msg.length; i++){
                 SEGGER_RTT_printf(0, "%c", recv_msg.buffer[i]);
@@ -23,11 +25,14 @@ void uart_Rx_Task(void *argument){
             SEGGER_RTT_printf(0, "\r\n");
 
             HAL_UART_Transmit(&huart1, recv_msg.buffer, recv_msg.length, 100); // 回显接收到的数据 
-
+#endif 
             osDelay(pdMS_TO_TICKS(2));
            }
        } else {
+#ifdef DEBUG_PRINTF
            SEGGER_RTT_printf(0, "Queue get timeout, status: %d\r\n", status);
+#endif
+        osDelay(pdMS_TO_TICKS(2));
        }
 
              // 在任务里打印，安全又稳定

@@ -7,6 +7,11 @@ extern "C" {
 
 
 #define FIRMWARE_VER "Bootloader_V1_1.0"
+#define DEBUG_ENABLE  0
+
+#if (DEBUG_ENABLE == 1)
+#define DEBUG_PRINTF
+#endif
 
 #ifdef __cplusplus
 }

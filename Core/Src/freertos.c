@@ -18,9 +18,11 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include "cmsis_os2.h"
+#include "main.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "main.h"
+
 #include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -62,6 +64,13 @@ const osThreadAttr_t uart_RXTask_attributes = {
   .stack_size = 128 * 8,
   .priority = (osPriority_t) osPriorityBelowNormal1,
 };
+/* Definitions for keyTask */
+osThreadId_t keyTaskHandle;
+const osThreadAttr_t keyTask_attributes = {
+  .name = "keyTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for uartQueue01 */
 osMessageQueueId_t uartQueue01Handle;
 const osMessageQueueAttr_t uartQueue01_attributes = {
@@ -75,7 +84,7 @@ const osMessageQueueAttr_t uartQueue01_attributes = {
 
 void led_Task(void *argument);
 void uart_Rx_Task(void *argument);
-
+void key_Task(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -117,6 +126,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  keyTaskHandle = osThreadNew(key_Task, NULL, &keyTask_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -163,6 +173,15 @@ __weak void uart_Rx_Task(void *argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-
+__weak void key_Task(void *argument)
+{
+  /* USER CODE BEGIN key_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END key_Task */
+}
 /* USER CODE END Application */
 

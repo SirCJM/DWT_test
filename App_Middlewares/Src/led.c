@@ -4,7 +4,7 @@
 // 2. 再包含 projdefs.h（通常 FreeRTOS.h 已经包含它，但显式包含更安全）
 #include "projdefs.h"
 // 3. 然后是 CMSIS-RTOS API 头文件（提供 osDelay）
-#include "cmsis_os2.h"
+#include "cmsis_os.h"
 // 4. 最后是其他依赖 FreeRTOS 的头文件，比如 task.h
 #include "task.h"
 
